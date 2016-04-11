@@ -1,0 +1,8 @@
+/log/*
+!/log/.keep
+/tmp
+
+.idea/*
+.ruby-gemset
+.ruby-version
+test/*
