@@ -1,10 +1,11 @@
 import { compose, createStore, applyMiddleware, combineReducers } from 'redux';
 
 import thunkMiddleware from 'redux-thunk';
-import loggerMiddleware from 'lib/middlewares/loggerMiddleware';
 
 import reducers from '../reducers';
 import { initialStates } from '../reducers';
+
+import { routerReducer } from 'react-router-redux';
 
 export default props => {
     const { $$appState } = initialStates;
@@ -13,9 +14,13 @@ export default props => {
         $$appStore: $$appState.merge({})
     };
 
-    const reducer = combineReducers(reducers);
+    const reducer = combineReducers({
+        ...reducers,
+        routing: routerReducer
+    });
+
     const composedStore = compose(
-        applyMiddleware(thunkMiddleware, loggerMiddleware),
+        applyMiddleware(thunkMiddleware),
         
         // React devTools
         window.devToolsExtension ? window.devToolsExtension() : f => f
